@@ -1,0 +1,45 @@
+server:
+  port: 8665
+
+spring:
+  batch:
+    job:
+      #自己控制 执行的任务 设置为 false -需要jobLaucher.run执行
+      enabled: false
+    initialize-schema: always
+  #    table-prefix: my-batch
+  datasource:
+    ##MySql
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/springboot-demo?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    #DataSource type
+    druid:
+      #连接初始值，连接池启动时创建的连接数量的初始值
+      initialSize: 5
+      #最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 ，0时无限制
+      minIdle: 5
+      #连接池的最大值，同一时间可以从池分配的最多连接数量，0时无限制
+      maxActive: 20
+      #配置获取连接等待超时的时间(毫秒)
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置有一个连接在连接池中的最小生存时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      # 打开PSCache，指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql将无法统计，'wall'用于防火墙
+      filters: stat, wall
+      # 通过connectProperties属性来打开mergeSql功能，慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      stat-view-servlet:
+        allow: 127.0.0.1
+
+
